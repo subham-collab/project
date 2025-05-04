@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>friendly Cars App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to bottom, #a2bfc8, #433d30);
+        }
+
+        .container {
+            max-width: 800px;
+            width: 95%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #051b21;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        h2{
+            color: #051b21;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #000000;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            color: #000000;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.8);
+            border-radius: 6px 6px 0 0;
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-bottom-color: #341822;
+        }
+
+        .form-input::placeholder {
+            color: rgba(69, 42, 42, 0.321);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .sign-up-button {
+            background-color: #00a6ff;
+            color: #000000;
+        }
+
+        .sign-up-button:hover {
+            background-color: #217fb9;
+        }
+
+        .login-button {
+            background-color: #00a6ff;
+            color: #000000;
+        }
+        .search-container {
+        position: relative;
+        width: 300px;
+        margin: 20px auto;
+        }
+
+        .search-input {
+        width: 100%;
+        padding: 10px 35px 10px 10px;
+        font-size: 16px;
+        }
+
+        .search-icon {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 20px;
+        height: 20px;
+        pointer-events: none;
+        }
+
+        .login-button:hover {
+            background-color: #547082;
+        }
+
+        .back-button, .reserve-button {
+            background-color: rgba(154, 154, 154, 0.7);
+            color: white;
+        }
+
+        .back-button:hover, .reserve-button:hover {
+            background-color: rgba(154, 154, 154, 0.5);
+        }
+
+        .table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        .users-table, .ride-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: rgba(224, 222, 225, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .users-table thead th, .ride-table thead th {
+            background-color: #125751;
+            color: #351b1b;
+            padding: 12px;
+            text-align: left;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .users-table tbody td, .ride-table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .users-table tbody tr:hover, .ride-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .users-table tbody tr:last-child td, .ride-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #b4b8c3;
+            margin-left: 10px;
+            width: 100%;
+            max-width: 180px;
+            font-size: 0.9rem;
+            background-color: rgba(255, 255, 255, 0.6);
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #7c8095;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-icon {
+            width: 31px;
+            height: 31px;
+            opacity: 0.7;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .back-to-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-to-login-link {
+            color: #eeecef;
+            text-decoration: underline;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .back-to-login-link:hover {
+            color: #afcbd3;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .form-input {
+                font-size: 0.9rem;
+            }
+
+            .btn {
+                font-size: 0.9rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+                align-items: flex-start;
+            
+            }
+
+            .search-input {
+                margin-left: 80px;
+                margin-top: 10px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .back-button, .reserve-button {
+                margin-top: 10px;
+            }
+
+            .table-container {
+                margin-top: 10px;
+            }
+        }
+        .clickableLabel {
+            color: rgba(238, 236, 239, 240);
+            text-decoration: underline;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .clickableLabel:hover {
+            color: rgba(175, 203, 219, 240);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="sign-title">Let's get started with friendly car</h1>
+        <div class="form-container" id="sign-in-form">
+            <div class="form-group">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" id="fullName" class="form-input" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-input" placeholder="Enter your password">
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" id="email" class="form-input" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="tel" id="phoneNumber" class="form-input" placeholder="Enter your phone number">
+            </div>
+            <button id="signUpBtn" class="btn sign-up-button">Sign Up</button>
+            <div class="back-to-login">
+                <a href="#" id="backToLoginLink" class="back-to-login-link">Back to Log In</a>
+            </div>
+        </div>
+
+        <div class="form-container" id="login-form" style="display: none;">
+            <h2>Welcome Back to Euro Cars</h2>
+            <div class="form-group">
+                <label for="loginEmail" class="form-label">E-mail</label>
+                <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password">
+            </div>
+            <button id="loginBtn" class="btn login-button">Log In</button>
+            <div class="back-to-login">
+                <a href="#" id="backToSignUpLink" class="back-to-login-link">Back to Sign Up</a>
+            </div>
+        </div>
+
+        <div class="container" id="admin-dashboard" style="display: none;">
+            <h1>Administrator Dashboard</h1>
+            <div class="search-container">
+                <input type="text" id="adminSearch" class="search-input" placeholder="Search users...">
+                <img src="https://cdn-icons-png.flaticon.com/128/10509/10509470.png" alt="Search" class="search-icon">
+                <div class="search-container">
+                    <input type="text" id="findRideSearch" class="search-input" placeholder="Search rides...">
+                    <img src="https://cdn-icons-png.flaticon.com/128/15764/15764628.png" alt="Search" class="search-icon">
+                </div>
+                
+                <ul id="rideList">
+                    <li>Delhi to Agra</li>
+                    <li>Mumbai to Pune</li>
+                    <li>Bangalore to Chennai</li>
+                    <li>Goa to Mumbai</li>
+                </ul>
+                
+            </div>
+            <div class="table-container">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUserTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <button id="adminBackToLoginBtn" class="btn back-button">Back to Log In</button>
+        </div>
+
+        <div class="container" id="create-ride-form" style="display: none;">
+            <h1>Create Ride</h1>
+            <div class="form-group">
+                <label for="carName" class="form-label">Car Name</label>
+                <input type="text" id="carName" class="form-input" placeholder="Enter car name">
+            </div>
+            <div class="form-group">
+                <label for="carModel" class="form-label">Car Model</label>
+                <input type="text" id="carModel" class="form-input" placeholder="Enter car model">
+            </div>
+            <div class="form-group">
+                <label for="carCapacity" class="form-label">Car Capacity (Seats)</label>
+                <input type="number" id="carCapacity" class="form-input" placeholder="Enter car capacity">
+            </div>
+            <div class="form-group">
+                <label for="carEngine" class="form-label">Car Engine Capacity (L)</label>
+                <input type="text" id="carEngine" class="form-input" placeholder="Enter engine capacity">
+            </div>
+            <div class="form-group">
+                <label for="carColor" class="form-label">Car Colour</label>
+                <input type="text" id="carColor" class="form-input" placeholder="Enter car color">
+            </div>
+            <div class="form-group">
+                <label for="carOwner" class="form-label">Car Owner</label>
+                <input type="text" id="carOwner" class="form-input" placeholder="Enter car owner name">
+            </div>
+            <button id="createRideSubmitBtn" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="container" id="find-ride-page" style="display: none;">
+            <h1>Available Rides</h1>
+            <div class="search-container">
+                <input type="text" id="findRideSearch" class="search-input" placeholder="Search rides...">
+                <img src="https://cdn-icons-png.flaticon.com/128/15764/15764628.png" alt="Search" class="search-icon">
+            </div>
+            <div class="table-container">
+                <table class="ride-table">
+                    <thead>
+                        <tr>
+                            <th>Car Name</th>
+                            <th>Car Model</th>
+                            <th>Car Capacity</th>
+                            <th>Car Engine Capacity</th>
+                            <th>Car Color</th>
+                            <th>Car Owner</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="findRideTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <button id="findRideBackBtn" class="btn back-button">Back</button>
+        </div>
+    </div>
+
+    <script>
+        const signUpBtn = document.getElementById('signUpBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const backToLoginLink = document.getElementById('backToLoginLink');
+        const backToSignUpLink = document.getElementById('backToSignUpLink');
+        const adminBackToLoginBtn = document.getElementById('adminBackToLoginBtn');
+        const createRideSubmitBtn = document.getElementById('createRideSubmitBtn');
+        const findRideBackBtn = document.getElementById('findRideBackBtn');
+
+
+        const signInForm = document.getElementById('sign-in-form');
+        const loginForm = document.getElementById('login-form');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const createRideForm = document.getElementById('create-ride-form');
+        const findRidePage = document.getElementById('find-ride-page');
+
+        let users = [];
+        let loggedInUser = null;
+
+        function showError(message) {
+            alert(message);
+        }
+
+        function displayAdminDashboard() {
+            signInForm.style.display = 'none';
+            loginForm.style.display = 'none';
+            adminDashboard.style.display = 'block';
+            createRideForm.style.display = 'none';
+            findRidePage.style.display = 'none';
+            renderAdminDashboard();
+        }
+
+        function showCreateRideForm() {
+            signInForm.style.display = 'none';
+            loginForm.style.display = 'none';
+            adminDashboard.style.display = 'none';
+            createRideForm.style.display = 'block';
+            findRidePage.style.display = 'none';
+        }
+
+        function showFindRidePage() {
+            signInForm.style.display = 'none';
+            loginForm.style.display = 'none';
+            adminDashboard.style.display = 'none';
+            createRideForm.style.display = 'none';
+            findRidePage.style.display = 'block';
+            renderFindRidePage();
+        }
+
+        function renderAdminDashboard() {
+            const adminUserTableBody = document.getElementById('adminUserTableBody');
+            adminUserTableBody.innerHTML = '';
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phoneNumber}</td>
+                `;
+                adminUserTableBody.appendChild(row);
+            });
+        }
+
+        let rides = [
+            { carName: "Toyota Camry", carModel: "2023", carCapacity: 5, carEngine: "2.5L", carColor: "Blue", carOwner: "John Smith" },
+            { carName: "Honda Civic", carModel: "2022", carCapacity: 5, carEngine: "2.0L", carColor: "Red", carOwner: "Jane Doe" },
+            { carName: "Ford Mustang", carModel: "2024", carCapacity: 4, carEngine: "5.0L", carColor: "Yellow", carOwner: "David Johnson" },
+
+            { carName: "Honda Civic", carModel: "2022", carCapacity: 5, carEngine: "2.0L", carColor: "Red", carOwner: "Jane Doe" },
+            { carName: "Ford Mustang", carModel: "2024", carCapacity: 4, carEngine: "5.0L", carColor: "Yellow", carOwner: "Peter Jones" },
+            { carName: "Chevrolet Silverado", carModel: "2023", carCapacity: 6, carEngine: "5.3L", carColor: "White", carOwner: "Mary Brown" },
+            { carName: "BMW X5", carModel: "2023", carCapacity: 5, carEngine: "3.0L", carColor: "Black", carOwner: "David Wilson" },
+            { carName: "Mercedes-Benz C-Class", carModel: "2022", carCapacity: 5, carEngine: "2.0L", carColor: "Silver", carOwner: "Sarah Garcia" },
+            { carName: "Audi A4", carModel: "2024", carCapacity: 5, carEngine: "2.0L", carColor: "Gray", carOwner: "Michael Rodriguez" },
+            { carName: "Nissan Altima", carModel: "2023", carCapacity: 5, carEngine: "2.5L", carColor: "Blue", carOwner: "Jennifer Williams" },
+            { carName: "Hyundai Sonata", carModel: "2022", carCapacity: 5, carEngine: "2.5L", carColor: "White", carOwner: "Christopher Garcia" },
+            { carName: "Kia Sorento", carModel: "2024", carCapacity: 7, carEngine: "2.5L", carColor: "Black", carOwner: "Angela Martinez" },
+            { carName: "Subaru Outback", carModel: "2023", carCapacity: 5, carEngine: "2.5L", carColor: "Green", carOwner: "Brian Robinson" },
+            { carName: "Volkswagen Jetta", carModel: "2022", carCapacity: 5, carEngine: "1.4L", carColor: "Red", carOwner: "Nicole Clark" },
+            { carName: "Mazda CX-5", carModel: "2024", carCapacity: 5, carEngine: "2.5L", carColor: "Gray", carOwner: "Kevin Lewis" },
+            { carName: "Tesla Model 3", carModel: "2023", carCapacity: 5, carEngine: "Electric", carColor: "White", carOwner: "Elon Musk" },
+            { carName: "Ford F-150", carModel: "2024", carCapacity: 5, carEngine: "3.5L", carColor: "Blue", carOwner: "Henry Ford" },
+            { carName: "Jeep Wrangler", carModel: "2023", carCapacity: 5, carEngine: "3.6L", carColor: "Green", carOwner: "Sergio Marchionne" },
+            { carName: "Ram 1500", carModel: "2022", carCapacity: 5, carEngine: "5.7L", carColor: "Black", carOwner: "Carlos Tavares" },
+            { carName: "GMC Sierra", carModel: "2024", carCapacity: 5, carEngine: "5.3L", carColor: "White", carOwner: "Mary Barra" },
+            { carName: "Toyota RAV4", carModel: "2023", carCapacity: 5, carEngine: "2.5L", carColor: "Silver", carOwner: "Akio Toyoda" },
+            { carName: "Honda CR-V", carModel: "2022", carCapacity: 5, carEngine: "1.5L", carColor: "Gray", carOwner: "Toshiaki Mikoshiba" },
+            { carName: "Nissan Rogue", carModel: "2024", carCapacity: 5, carEngine: "2.5L", carColor: "Blue", carOwner: "Makoto Uchida" }
+
+
+
+        ];
+
+        function renderFindRidePage() {
+            const findRideTableBody = document.getElementById('findRideTableBody');
+            findRideTableBody.innerHTML = '';
+            rides.forEach(ride => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${ride.carName}</td>
+                    <td>${ride.carModel}</td>
+                    <td>${ride.carCapacity}</td>
+                    <td>${ride.carEngine}</td>
+                    <td>${ride.carColor}</td>
+                    <td>${ride.carOwner}</td>
+                    <td><button class="btn btn-primary reserve-ride-btn">Reserve</button></td>
+                `;
+                findRideTableBody.appendChild(row);
+            });
+
+            const reserveRideButtons = document.querySelectorAll('.reserve-ride-btn');
+            reserveRideButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    alert(`Ride reserved: ${rides[index].carName} - ${rides[index].carModel}`);
+                });
+            });
+        }
+
+        signUpBtn.addEventListener('click', () => {
+            const fullName = document.getElementById('fullName').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+
+            if (fullName && password && email && phoneNumber) {
+                if (email === 'admin@example.com' && password === 'admin123') {
+                    loggedInUser = { fullName: 'Admin', email: 'admin@example.com', phoneNumber: '' };
+                    users.push(loggedInUser);
+                    displayAdminDashboard();
+                } else {
+                    users.push({ fullName, email, phoneNumber, password });
+                    alert('Account created successfully! Please log in.');
+                    signInForm.style.display = 'none';
+                    loginForm.style.display = 'block';
+                }
+                document.getElementById('fullName').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phoneNumber').value = '';
+            } else {
+                showError('Please fill in all the fields.');
+            }
+        });
+
+        loginBtn.addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (email === 'admin@example.com' && password === 'admin123') {
+                loggedInUser = { fullName: 'Admin', email: 'admin@example.com', phoneNumber: '' };
+                displayAdminDashboard();
+            } else {
+                const user = users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    loggedInUser = user;
+                    alert('Logged in successfully!');
+                    showFindRidePage();
+                } else {
+                    showError('Invalid credentials. Please check your email and password.');
+                }
+            }
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        });
+
+        backToLoginLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            signInForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        backToSignUpLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            loginForm.style.display = 'none';
+            signInForm.style.display = 'block';
+        });
+
+        adminBackToLoginBtn.addEventListener('click', () => {
+            adminDashboard.style.display = 'none';
+            loginForm.style.display = 'block';
+            loggedInUser = null;
+        });
+
+        createRideSubmitBtn.addEventListener('click', () => {
+            const carName = document.getElementById('carName').value;
+            const carModel = document.getElementById('carModel').value;
+            const carCapacity = document.getElementById('carCapacity').value;
+            const carEngine = document.getElementById('carEngine').value;
+            const carColor = document.getElementById('carColor').value;
+            const carOwner = document.getElementById('carOwner').value;
+
+            if (carName && carModel && carCapacity && carEngine && carColor && carOwner) {
+                rides.push({ carName, carModel, carCapacity, carEngine, carColor, carOwner });
+                alert('Ride created successfully!');
+                document.getElementById('carName').value = '';
+                document.getElementById('carModel').value = '';
+                document.getElementById('carCapacity').value = '';
+                document.getElementById('carEngine').value = '';
+                document.getElementById('carColor').value = '';
+                document.getElementById('carOwner').value = '';
+                showFindRidePage();
+            } else {
+                alert('Please fill in all the fields.');
+            }
+        });
+
+        findRideBackBtn.addEventListener('click', () => {
+            findRidePage.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        document.getElementById('adminSearch').addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredUsers = users.filter(user =>
+                user.fullName.toLowerCase().includes(searchTerm) ||
+                user.email.toLowerCase().includes(searchTerm) ||
+                user.phoneNumber.toLowerCase().includes(searchTerm)
+            );
+            const adminUserTableBody = document.getElementById('adminUserTableBody');
+            adminUserTableBody.innerHTML = '';
+            filteredUsers.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phoneNumber}</td>
+                `;
+                adminUserTableBody.appendChild(row);
+            });
+        });
+
+        window.onload = function () {
+            loginForm.style.display = 'block';
+        };
+        document.getElementById('findRideSearch').addEventListener('input', function () {
+    const searchValue = this.value.toLowerCase();
+    const rides = document.querySelectorAll('#rideList li');
+
+    rides.forEach(function (ride) {
+        const text = ride.textContent.toLowerCase();
+        if (text.includes(searchValue)) {
+            ride.style.display = 'list-item';
+        } else {
+            ride.style.display = 'none';
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
